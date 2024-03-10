@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: amywebapp
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD} 
+    url: jdbc:mysql://${MYSQL_HOST}:3306/${MYSQL_DATABASE}?sslMode=REQUIRED
+server:
+  port: 8081
+
+logging.config:
+  classpath: log4j2.xml
+
+cloud:
+  aws:
+    bucketname: ${S3_BUCKETNAME}
+
+amazon:
+  dynamodb:
+  endpoint: http://localhost:8000/
+  aws:
+    accesskey:
+    secretkey:
+
+management:
+  metrics:
+    export:
+      statsd:
+        host: localhost
+        port: 8125
+        flavor: telegraf
+        enabled: true
+        protocol: udp
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics
